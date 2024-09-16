@@ -1,0 +1,48 @@
+# Steps to generate SSH keys:
+
+1 - Generate an RSA Key:
+```
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa_catalyst
+```
+
+-t rsa: Specifies RSA as the key type.
+-b 2048: Indicates the size of the key (2048 bits is recommended).
+-f ~/.ssh/id_rsa_catalyst: Specifies the file where the key will be saved.
+Follow the on-screen instructions to set a passphrase (optional).
+
+2 - Generate an ED25519 Key: From Cisco IOS XE 17.10.1a onwards, the Catalyst 8000V supports ED25519 keys, which are more efficient than RSA. Use this command:
+```
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_catalyst
+```
+
+-t ed25519: Specifies ED25519 as the key type.
+-f ~/.ssh/id_ed25519_catalyst: Specifies the file where the key will be saved.
+
+Again, set a passphrase if needed.
+
+3 - Copy the Public Key to the Catalyst 8000V Instance: Once the keys are generated, copy the public key to your Cisco Catalyst 8000V instance.
+```
+ssh-copy-id -i ~/.ssh/id_rsa_catalyst.pub <username>@<catalyst-instance-ip>
+```
+or
+```
+ssh-copy-id -i ~/.ssh/id_ed25519_catalyst.pub <username>@<catalyst-instance-ip>
+```
+
+
+4 - Verify Key-Based SSH Access: Now, try to SSH into your Cisco Catalyst 8000V instance using the private key:
+
+```
+ssh -i ~/.ssh/id_rsa_catalyst <username>@<catalyst-instance-ip>
+```
+or
+```
+ssh -i ~/.ssh/id_ed25519_catalyst <username>@<catalyst-instance-ip>
+```
+If the setup is successful, you will be logged in without needing a password.
+
+
+
+
+
+
